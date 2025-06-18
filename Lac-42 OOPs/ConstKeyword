@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+/*
+// const Objects (Immutable Objects)
+// A const object is an instance of a class that cannot modify any of its data members after creation. It can only call const member functions.
+class Example {
+    int x;
+
+public:
+    Example(int val) : x(val) {}
+
+    void setX(int val) { x = val; } // Non-const function
+
+    int getX() const { return x; }  // Const function
+
+};
+
+int main() {
+    const Example obj(10); // Immutable object
+    std::cout << obj.getX() << std::endl; // Allowed
+
+    // obj.setX(20);  // ❌ Error: Cannot call non-const function on a const object
+    return 0;
+}
+*/
+
+
+// 3. const Member Functions (Preventing Modification)
+// A member function declared as const cannot modify any data members or call non-const functions.
+class Example {
+    int x;
+
+public:
+    Example(int val) : x(val) {}
+
+    void setX(int val) { x = val; }  // Non-const function
+
+    const int getX() { return x; }  // Const function (Cannot modify data members)
+};
+int main() {
+    Example obj(10);
+    obj.setX(20);
+    cout<<"Value of x is: " << obj.getX();
+
+    return 0;
+}

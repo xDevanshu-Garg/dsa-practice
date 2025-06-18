@@ -1,0 +1,1 @@
+//to do this At the time of intersection when slow equals fast initialise a count variable than move slow ptr one step at a time until slow equals to fast.
