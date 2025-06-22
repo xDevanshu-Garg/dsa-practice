@@ -20,6 +20,7 @@ This repo includes topic-wise folders with problems solved in C++.
 ## 📅 Daily Practice Log
 | Date       | Topics Practiced           | Notes                     |
 |------------|-----------------------------|---------------------------|
+| 22 June    | Queue (singly and circular)         | implementation |
 | 18 June    | Stack + Linked List         | Revision + new questions |
 | 17 June    | Sorting                     | Merge sort implementation|
 | ...        | ...                         | ...                       |
