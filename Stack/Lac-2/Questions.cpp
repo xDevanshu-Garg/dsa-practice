@@ -1,6 +1,8 @@
+#include <bits/stdc++.h>
+#include <iostream>
+using namespace std;
 //!Delete Middle Element in Stack:https://bit.ly/3ovTIu2
-/*
-#include <bits/stdc++.h> 
+
 void solve(stack<int>&inputStack, int N, int count){
    //Base Case
    if(count == N/2){
@@ -22,12 +24,9 @@ void deleteMiddle(stack<int>&inputStack, int N){
 
    solve(inputStack, N, count);
 }
-   */
-
 
 //! Valid Parenthesis:https://bit.ly/34kxPaq
 
-/*
 class Solution {
 public:
     bool isValid(string s) {
@@ -38,18 +37,16 @@ public:
                 (st.top() == '{' && ch == '}') ||
                 (st.top() == '[' && ch == ']')) {
                 st.pop();
-            } else
-                st.push(ch);
+            }
+            else st.push(ch);
         }
         return st.empty();
     }
 };
-*/
 
 
 //! InsertAtBottom in Stack:https://bit.ly/34qqmGL
 
-/*
 #include <bits/stdc++.h> 
 
 void solve(stack<int>&stack, int x){
@@ -73,10 +70,9 @@ stack<int> pushAtBottom(stack<int>& myStack, int x)
    return myStack;
 }
 
-*/
 
 //! Reverse a Stack using recursion:https://bit.ly/3HCBnD4
-/*
+
 void insertAtBottom(stack<int>&stack, int x){
    //Base Case
    if(stack.empty()){
@@ -107,19 +103,31 @@ void reverse(stack<int> &s){
 void reverseStack(stack<int> &stack) {
     reverse(stack);
 }
-*/
 
+//! Reverse a stack using another stack
+
+void reverseStack(stack<int>& s) {
+    stack<int> temp;
+
+    // Transfer all elements to temp stack
+    while (!s.empty()) {
+        temp.push(s.top());
+        s.pop();
+    }
+
+    // Transfer back to original stack
+    s = temp;
+}
 //! Redundant Brackets:https://bit.ly/3srTkOv
-/*
+
 bool findRedundantBrackets(string &s)
 {
     stack<char> st;
 
     for(int i = 0; i<s.length(); i++){
         char ch = s[i];
-        if((ch == '(') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')){
+        if((ch == '(') || (ch == '+') || (ch == '-') || (ch == '*') || (ch == '/'))
             st.push(ch);
-        }
         else{
             if(ch == ')'){
                 bool isRedundant = true;
@@ -137,11 +145,9 @@ bool findRedundantBrackets(string &s)
     }
     return false;
 }
-*/
 
 //! Minimum bracket Reversal:https://bit.ly/3GAYRr5
 
-/*
 int findMinimumCost(string str) {
   // If string is odd then solution is not possible
   if((str.length() % 2) != 0) return -1; 
@@ -167,4 +173,3 @@ int findMinimumCost(string str) {
       return ((a+1)/2 + (b+1)/2);
   }
 }
-*/

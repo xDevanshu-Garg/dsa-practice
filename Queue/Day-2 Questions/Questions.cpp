@@ -60,7 +60,7 @@ class Solution {
    Steps:
    1. Process first window: store indices of negatives
    2. For each new element:
-      - Remove indices outside the window
+      - Remove indices outside the window via i - dq.front() >= k which means dq ke front me jo pada h uski distance k se jayada h to hata do. 
       - Add current index if value is negative
       - Append result: arr[dq.front()] or 0
 
