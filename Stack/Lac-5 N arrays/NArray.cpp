@@ -1,5 +1,4 @@
 //! N Stacks in an Array: https://bit.ly/3BexNwv
-/*
 #include <bits/stdc++.h> 
 class NStack
 {
@@ -9,6 +8,7 @@ class NStack
 
 public:
     // Initialize your data structure.
+    // N = no. of stacks, S = size of array
     NStack(int N, int S)
     {
         n = N;
@@ -72,4 +72,3 @@ public:
         return arr[index];
     }
 };
-*/

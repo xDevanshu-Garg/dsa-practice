@@ -1,95 +1,163 @@
+//! ***************************************Using STL ****************************************************************
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    cout<<"Queue Questions";
+
+    return 0;
+}
 //! Queue Reversal: https://www.geeksforgeeks.org/problems/queue-reversal/1
-
-//? **********************USING STACKS***********************
-//uesd commenly
-/*
-stack<int> s;
-while(!q.empty()){
-    int ele = q.front();
-    q.pop();
-    s.push(ele);
-}
-while(!s.empty()){
-    int ele = s.top();
-    s.pop();
-    q.push(ele);
-}
-return q;
-
-*/
-//? *********************USING RECURSION***********************
-//TLE recursion works but not optimal for large test cases
-//Base Case
-/*
-if(q.size() == 1) return q;
-
-//RR
-int ele = q.front();
-q.pop();
-q = reverseQueue(q);
-q.push(ele);
-
-return q;
-*/
-
-//! First negative in every window of size k: https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1
-
-
-//************************Two pointers******************************
-//Gives TLE, TC= O(n*k), where k is size of window
-/*
-vector<int> ans;
-bool found = false;
-int first = 0, last = k-1;
-while(last < arr.size()){
-    found = false;
-    for(int i = first; i <= last; i++){
-        if(arr[i] < 0) {
-            ans.push_back(arr[i]);
-            found = true;
-            break;
+class Solution {
+  public:
+    queue<int> reverseQueue(queue<int> &q) {
+        //? **********************USING STACKS***********************
+        //uesd commenly
+        
+        stack<int> s;
+        while(!q.empty()){
+            int ele = q.front();
+            q.pop();
+            s.push(ele);
         }
+        while(!s.empty()){
+            int ele = s.top();
+            s.pop();
+            q.push(ele);
+        }
+        return q;
+        
+        
+        //? **********************USING RECURSION***********************
+        //TLE recursion works but not optimal for large test cases
+        //Base Case
+        
+        if(q.size() == 1) return q;
+        
+        //RR
+        int ele = q.front();
+        q.pop();
+        q = reverseQueue(q);
+        q.push(ele);
+        
+        return q;
+        
     }
-    if(!found) ans.push_back(0);
-    first++,last++;
-}
-return ans;
+};
+
+
+//! 🔍 First Negative Integer in Every Window of Size K
+//!    Link: https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1
+
+/* 
+   Idea:
+   - Use a deque to store indices of negative numbers in the current window.
+   - Front of deque → first negative in window
+   - Remove indices that go out of the current window
+
+   Steps:
+   1. Process first window: store indices of negatives
+   2. For each new element:
+      - Remove indices outside the window
+      - Add current index if value is negative
+      - Append result: arr[dq.front()] or 0
+
+   🕒 Time Complexity: O(n)
+   💾 Space Complexity: O(k) (worst-case: all negative)
+
+   🧠 Pattern:
+   - Sliding Window + Condition-based Deque
+   - Applies to: Sliding Window Maximum, First Non-Repeating Char, Min/Max of Subarrays
 */
 
-// **********************Using Deque**************************************
 
-/*
-deque<int> dq; // stores indices of negative numbers
-vector<int> ans;
-// Step1: Process first window
-for(int i = 0; i< k; i++){
-    if(arr[i] < 0) dq.push_back(i);
-}
-
-//Step2: Store ans of first k size window
-if(dq.size() > 0) ans.push_back(arr[dq.front()]);
-else ans.push_back(0);
-
-//Step3: Process remaining windows
-for(int i = k; i < arr.size(); i++){
-    //Step4: Remove indices out of this window
-    if(!dq.empty() && i - dq.front() >= k){
-        dq.pop_front();
+class Solution {
+  public:
+    vector<int> firstNegInt(vector<int>& arr, int k) {
+        //? /************************Two pointers******************************
+        //Gives TLE, TC= O(n*k), where k is size of window
+        
+        vector<int> ans;
+        bool found = false;
+        int first = 0, last = k-1;
+        while(last < arr.size()){
+            found = false;
+            for(int i = first; i <= last; i++){
+                if(arr[i] < 0) {
+                    ans.push_back(arr[i]);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) ans.push_back(0);
+            first++,last++;
+        }
+        return ans;
+        
+        
+        //? **********************Using Deque**************************************
+        
+        deque<int> dq; // stores indices of negative numbers
+        vector<int> ans;
+        // Step1: Process first window
+        for(int i = 0; i< k; i++){
+            if(arr[i] < 0) dq.push_back(i);
+        }
+        
+        //Step2: Store ans of first k size window
+        if(dq.size() > 0) ans.push_back(arr[dq.front()]);
+        else ans.push_back(0);
+        
+        //Step3: Process remaining windows
+        for(int i = k; i < arr.size(); i++){
+            //Step4: Remove indices out of this window
+            if(!dq.empty() && i - dq.front() >= k){
+                dq.pop_front();
+            }
+            //Step5: Add current element if negative
+            if(arr[i] < 0) dq.push_back(i);
+            
+            //Step6: Append result
+            if(dq.size() > 0) ans.push_back(arr[dq.front()]);
+            else ans.push_back(0);
+        }
+        
+        return ans;
     }
-    //Step5: Add current element if negative
-    if(arr[i] < 0) dq.push_back(i);
-    
-    //Step6: Append result
-    if(dq.size() > 0) ans.push_back(arr[dq.front()]);
-    else ans.push_back(0);
-}
+};
 
-return ans;
+//! 🔍 239. Sliding Window Maximum
+//!  Link: https://leetcode.com/problems/sliding-window-maximum/
+/*
+   Idea:
+   - Use a deque to maintain **indices** of useful elements in **decreasing order of values**.
+   - The front of deque always contains the index of the **maximum element** in the current window.
+   - While inserting new elements:
+     - Remove indices from the back where their corresponding values are less than the current element.(while loop)
+     - Remove front if it's out of the window.
+
+   🔹 Steps:
+   1. Process the first `k` elements:
+      - Maintain decreasing order in deque by poping elemenets which is smaller than current.
+   2. For each remaining element from index `k` onward:
+      - Remove out-of-window indices from front.
+      - Remove all smaller elements from back (they are useless now).
+      - Add current index to deque.
+      - Push `nums[dq.front()]` to result.
+
+   🕒 Time Complexity: O(n)
+   💾 Space Complexity: O(k) (worst-case: all elements decreasing)
+
+   🧠 Pattern:
+   - Sliding Window + Monotonic Deque
+   - Also used in problems like:
+     - First Negative Integer in Window
+     - Sum/Min/Max of Subarrays
+     - Stock Span (variation of maintaining monotonic stack/deque)
 */
 
-//!239. Sliding Window Maximum: https://leetcode.com/problems/sliding-window-maximum/?envType=problem-list-v2&envId=queue
-
-/*
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
@@ -130,10 +198,39 @@ public:
         return ans;
     }
 };
+
+
+//! 🔍 First Non-Repeating Character in a Stream
+//!   Link: https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1
+/* 
+
+   Idea:
+   - Use a hash map to **count frequencies** of each character.
+   - Use a queue to maintain the **order of characters** as they arrive in the stream.
+   - For every new character:
+     - Increment its count.
+     - Push it into the queue.
+     - While queue is not empty and front has count > 1, pop it.
+     - Append front of queue to result, or '#' if no non-repeating character.
+
+   🔹 Steps:
+   1. For each char in the stream:
+      - count[ch]++
+      - q.push(ch)
+      - While (q.front() is repeating), q.pop()
+      - Append q.front() or '#' to answer
+
+   🕒 Time Complexity: O(n) — Each char enters and exits queue once
+   💾 Space Complexity: O(1) — 26 characters max (assuming lowercase)
+
+   🧠 Pattern:
+   - Queue for **order maintenance**
+   - Map for **frequency tracking**
+   - Also applies to problems like:
+     - First Negative Integer in Window (window-wise tracking)
+     - LRU Cache (tracking recency and frequency)
 */
 
-//! First Non-Repeating character in stream: https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1
-/*
 class Solution {
   public:
     string FirstNonRepeating(string &s) {
@@ -171,11 +268,41 @@ class Solution {
         return ans;
     }
 };
+
+//!  🔍 Circular Tour (Gas Station Problem)
+//!   Link: https://www.geeksforgeeks.org/problems/circular-tour-1587115620/1
+
+   /*
+   Idea:
+   - We need to find a starting petrol pump index from where a truck can complete the tour without running out of fuel.
+   - Use two variables:
+     - `balance` → current fuel balance while traversing stations.
+     - `deficit` → total shortage whenever balance drops below 0.
+   - If balance < 0 at any point, reset start to next station and accumulate the deficit.
+
+   🔹 Steps:
+   1. Traverse all stations once:
+      - balance += gas[i] - cost[i]
+      - if balance < 0:
+          - deficit += balance
+          - start = i + 1
+          - balance = 0
+   2. After traversal:
+      - If (balance + deficit >= 0), return start
+      - Else return -1
+
+   🕒 Time Complexity: O(n)
+   💾 Space Complexity: O(1)
+
+   🧠 Pattern:
+   - Greedy + Single Pass
+   - Similar to problems like:
+     - Jump Game (greedy with early resets)
+     - Minimum platforms (greedy scheduling)
+     - Interval merging (local decisions for global solution)
 */
 
-//! Circular tour: https://www.geeksforgeeks.org/problems/circular-tour-1587115620/1
 
-/*
 class Solution {
   public:
     int startStation(vector<int> &gas, vector<int> &cost) {
@@ -208,10 +335,35 @@ class Solution {
         return -1;
     }
 };
+
+
+
+//!  🔍 Interleave the First Half of the Queue with the Second Half
+//!    Link: https://www.geeksforgeeks.org/problems/interleave-the-first-half-of-the-queue-with-second-half/1
+
+   /*
+   Idea:
+   - Given a queue of even length, interleave its two halves.
+   - Example: 
+     Input  = {1, 2, 3, 4}
+     Output = {1, 3, 2, 4}
+
+   🔹 Steps:
+   1. Push the first half of the queue into a temporary queue `nq`.
+   2. While `nq` is not empty:
+      - Push one element from `nq` (first half).
+      - Push one element from the remaining original queue (second half).
+
+   🕒 Time Complexity: O(n)
+   💾 Space Complexity: O(n) for temporary queue
+
+   🧠 Pattern:
+   - Queue manipulation & interleaving
+   - Similar techniques used in:
+     - Stack ↔ Queue reversal
+     - Simulating interleaved merges (like perfect shuffle)
 */
 
-//! Interleave the First Half of the Queue with Second Half: https://www.geeksforgeeks.org/problems/interleave-the-first-half-of-the-queue-with-second-half/1
-/*
 class Solution {
   public:
     queue<int> rearrangeQueue(queue<int> q) {
@@ -237,4 +389,3 @@ class Solution {
         return q;
     }
 };
-*/

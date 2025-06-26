@@ -1,5 +1,7 @@
+#include <iostream>
+using namespace std;
+
 //! 622. Design Circular Queue: https://leetcode.com/problems/design-circular-queue/?envType=problem-list-v2&envId=queue
-/*
 class MyCircularQueue {
 public:
     int *arr;
@@ -54,5 +56,3 @@ public:
         return (rear + 1) % n == front;
     }
 };
-
-*/

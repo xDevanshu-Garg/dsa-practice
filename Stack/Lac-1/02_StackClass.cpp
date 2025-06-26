@@ -112,7 +112,7 @@ class Stack{
     }
 
     int pop(){
-        if(top == nullptr){
+        if(empty()){
         cout << "Stack Underflow!" << endl;
         return -1;
     }
@@ -124,7 +124,7 @@ class Stack{
     }
 
     int peek(){
-        if(top == nullptr){
+        if(empty()){
             cout<<"Stack is Empty" << endl; 
             return -1;
         }
