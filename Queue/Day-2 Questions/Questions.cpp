@@ -389,3 +389,90 @@ class Solution {
         return q;
     }
 };
+
+/* 🔍 Sum of Minimum and Maximum Elements of All Subarrays of Size K
+   Link: https://www.naukri.com/code360/problems/sum-of-minimum-and-maximum-elements-of-all-subarrays-of-size-k_1171047
+
+   ✅ Problem:
+   Given an array `nums` and integer `k`, calculate the **sum of min and max** of every subarray of size `k`.
+
+   🔹 Idea:
+   - Use two **monotonic deques**:
+     - `maxi`: stores indices in decreasing order → for current window max
+     - `mini`: stores indices in increasing order → for current window min
+   - At each step:
+     - Remove indices out of current window from front
+     - Remove all smaller/larger elements from back before inserting new element
+     - Once i ≥ k-1, record: `nums[maxi.front()] + nums[mini.front()]` to the result
+
+   🔹 New Trick Used:
+   ✅ No need to process the first window separately.
+   - 1) Just start the loop from `i = 0 to n-1`
+   - 2) Check mini and maxi is not empty in while loop(before atleast one element was there after every window because we preprocess atleast one window but now this is not the case so this condition is must)
+   - 3) Use `if (i >= k - 1)` inside the loop to record results only when a full window has formed
+
+   🔹 Steps:
+   for i in 0 to n-1:
+     - Pop indices from front if out of window: (i - dq.front() >= k)
+     - Pop from back while condition violates:
+         → maxi: nums[i] > nums[dq.back()]
+         → mini: nums[i] < nums[dq.back()]
+     - Push current index
+     - if (i >= k - 1): 
+         → total += nums[maxi.front()] + nums[mini.front()]
+
+   🕒 Time Complexity: O(n)
+   💾 Space Complexity: O(k) (max size of each deque)
+
+   🧠 Pattern:
+   - Sliding Window + Monotonic Deque
+   - Closely related to:
+     - Sliding Window Maximum
+     - First Negative in Every Window
+     - Sum/Min/Max of Window
+*/
+
+#include <bits/stdc++.h> 
+long long sumOfMaxAndMin(vector<int> &nums, int n, int k) {
+	deque<int> mini;	
+	deque<int> maxi;
+	long long total = 0;
+
+	// //Solve first window
+	// for(int i = 0; i<k; i++){
+	// 	while(!maxi.empty() && nums[i] > nums[maxi.back()]){
+	// 		maxi.pop_back();
+	// 	}
+	// 	maxi.push_back(i);
+	// }
+
+	// for(int i = 0; i<k; i++){
+	// 	while(!mini.empty() && nums[i] < nums[mini.back()]){
+	// 		mini.pop_back();
+	// 	}
+	// 	mini.push_back(i);
+	// }
+
+	// total = nums[maxi.front()] + nums[mini.front()];
+
+	//rest of the windows
+	for(int i = 0; i < n; i++){
+		//remove out of the window element
+		if(!maxi.empty() && i - maxi.front() >= k) maxi.pop_front();		
+		if(!mini.empty() && i - mini.front() >= k) mini.pop_front();
+
+		//add new element of the window
+		while(!maxi.empty() && nums[i] > nums[maxi.back()]){
+			maxi.pop_back();
+		}
+		maxi.push_back(i);
+
+		while(!mini.empty() && nums[i] < nums[mini.back()]){
+			mini.pop_back();
+		}
+		mini.push_back(i);
+
+		if(i >= k - 1) total += nums[maxi.front()] + nums[mini.front()];
+	}
+	return total;
+}
