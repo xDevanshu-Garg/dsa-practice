@@ -118,6 +118,7 @@ void reverseStack(stack<int>& s) {
     // Transfer back to original stack
     s = temp;
 }
+
 //! Redundant Brackets:https://bit.ly/3srTkOv
 
 bool findRedundantBrackets(string &s)

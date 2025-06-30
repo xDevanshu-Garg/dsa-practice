@@ -94,7 +94,7 @@ class Solution {
     }
 };
 
-//* TC: reduced from O(N^2) ot O(N)
+//* TC: reduced from O(N^2) to O(N)
 
 //!  🔍 Diameter of Binary Tree
 //!    Link: https://www.geeksforgeeks.org/problems/diameter-of-binary-tree/1

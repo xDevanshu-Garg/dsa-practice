@@ -19,7 +19,7 @@ public:
     
     // Push in stack 1.
     void push1(int num) {
-        if((top1 < size-1) && (top2-top1 > 1)){
+        if(top2-top1 > 1){
             top1++;
             arr[top1] = num;
         }
@@ -27,7 +27,7 @@ public:
 
     // Push in stack 2.
     void push2(int num) {
-        if((top2 > 0) && (top2-top1 > 1)){ //OR (top2-top1) > 1 means dono ke beech kam se kam ek array ka dabba to hona hi chaiye 1 means ek ka anter h to koi dabba beech me nhi hoga 5-4 = 1 yaha 4 pr bhi ek ele h aur 5 pr bhi so atleast 2 chaiye
+        if(top2-top1 > 1){ //OR (top2-top1) > 1 means dono ke beech kam se kam ek array ka dabba to hona hi chaiye 1 means ek ka anter h to koi dabba beech me nhi hoga 5-4 = 1 yaha 4 pr bhi ek ele h aur 5 pr bhi so atleast 2 chaiye
             top2--;
             arr[top2] = num;
         }

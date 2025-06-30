@@ -30,8 +30,12 @@ class Solution {
     vector<int> zigZagTraversal(Node* root) {
         vector<int> result;
         queue<Node*> q;
-        q.push(root);
         bool leftToRight = true;
+
+        //Base Case
+        if(!root) return result;
+        
+        q.push(root);
         
         while(!q.empty()){
             int size = q.size();
@@ -63,43 +67,177 @@ Store root
  2.2 Traverse leaf nodes of right subtree
  2.3 Traverse right subtree and while coming back store the values.
 */
-    class Solution {
-      public:
-        void solveLeft(Node* root, vector<int> &ans){
-            if(!root || !root->left && !root->right) return;
-            
-            ans.push_back(root->data);
-            if(root->left) solveLeft(root->left, ans);
-            else solveLeft(root->right, ans);
-        }
-        void solveLeaf(Node* root, vector<int> &ans){
-            if(!root) return;
-            if(!root->left && !root->right) ans.push_back(root->data);
-            
-            //We've to use LNR inorder
-            solveLeaf(root->left, ans);
-            solveLeaf(root->right, ans);
-            
-        }
+class Solution {
+    public:
+    void solveLeft(Node* root, vector<int> &ans){
+        if(!root || !root->left && !root->right) return;
         
-        void solveRight(Node* root, vector<int> &ans){
-            if(!root || !root->left && !root->right) return;
-            
-            if(root->right)solveRight(root->right, ans);
-            else solveRight(root->left, ans);
-            
-            ans.push_back(root->data);
-        }
+        ans.push_back(root->data);
+        if(root->left) solveLeft(root->left, ans);
+        else solveLeft(root->right, ans);
+    }
+    void solveLeaf(Node* root, vector<int> &ans){
+        if(!root) return;
+        if(!root->left && !root->right) ans.push_back(root->data);
         
-        vector<int> boundaryTraversal(Node *root) {
-            vector<int> ans;
-            ans.push_back(root->data);
-            solveLeft(root->left, ans);
-            solveLeaf(root->left, ans);
-            solveLeaf(root->right, ans);
-            solveRight(root->right, ans);
+        //We've to use LNR inorder
+        solveLeaf(root->left, ans);
+        solveLeaf(root->right, ans);
+        
+    }
+    
+    void solveRight(Node* root, vector<int> &ans){
+        if(!root || !root->left && !root->right) return;
+        
+        if(root->right)solveRight(root->right, ans);
+        else solveRight(root->left, ans);
+        
+        ans.push_back(root->data);
+    }
+    
+    vector<int> boundaryTraversal(Node *root) {
+        vector<int> ans;
+        ans.push_back(root->data);
+        solveLeft(root->left, ans);
+        solveLeaf(root->left, ans);
+        solveLeaf(root->right, ans);
+        solveRight(root->right, ans);
+        
+        
+        return ans;
+    }
+};
+
+//! Top view: https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+class Solution {
+  public:
+    // Function to return a list of nodes visible from the top view
+    // from left to right in Binary Tree.
+    vector<int> topView(Node *root) {
+        queue<pair<Node*, int> > q;
+        map<int , int> mapping;
+        
+        q.push({root, 0});
+        
+        while(!q.empty()){
+            auto temp = q.front();
+            Node* frontNode = temp.first;
+            int HD = temp.second;
             
+            q.pop();
             
-            return ans;
+            if(mapping.find(HD) == mapping.end()) mapping[HD] = frontNode->data;
+            
+            if(frontNode->left) q.push({frontNode->left, HD-1});
+            if(frontNode->right) q.push({frontNode->right, HD+1});
         }
-    };
+        vector<int> ans;
+        for(auto i: mapping)
+            ans.push_back(i.second);
+        return ans;
+    }
+};
+
+//! Bottom view: https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+
+class Solution {
+  public:
+    vector<int> bottomView(Node *root) {
+        // Your Code Here
+        queue<pair<Node*, int> > q;
+        map<int , int> mapping;
+        
+        q.push({root, 0});
+        
+        while(!q.empty()){
+            auto temp = q.front();
+            Node* frontNode = temp.first;
+            int HD = temp.second;
+            
+            q.pop();
+            
+            mapping[HD] = frontNode->data;
+            
+            if(frontNode->left) q.push({frontNode->left, HD-1});
+            if(frontNode->right) q.push({frontNode->right, HD+1});
+        }
+        vector<int> ans;
+        for(auto i: mapping)
+            ans.push_back(i.second);
+        return ans;
+    }
+};
+
+//! Left view: https://www.geeksforgeeks.org/problems/left-view-of-binary-tree/1
+
+class Solution {
+  public:
+    void solve(Node *root, int lvl, vector<int> &ans) {
+        //Base Case
+        if(!root) return;
+        
+        //processing
+        if(ans.size() == lvl) ans.push_back(root->data);
+        
+        solve(root->left, lvl+1, ans);   
+        solve(root->right, lvl+1, ans);   
+    }
+    vector<int> leftView(Node *root) {
+        vector<int> ans;
+        solve(root, 0, ans);
+        
+        return ans;
+    }
+};
+
+//! Right view: https://www.geeksforgeeks.org/problems/right-view-of-binary-tree/1
+
+class Solution {
+  public:
+    void solve(Node *root, int lvl, vector<int> &ans) {
+        //Base Case
+        if(!root) return;
+        
+        //processing
+        if (lvl == ans.size()) ans.push_back(root->data);
+        
+        solve(root->right, lvl+1, ans);   
+        solve(root->left, lvl+1, ans);   
+    }
+    vector<int> rightView(Node *root) {
+        vector<int> ans;
+        solve(root, 0, ans);
+        return ans;
+    }
+};
+
+//! Diagonal view: https://www.geeksforgeeks.org/problems/diagonal-traversal-of-binary-tree/1
+
+class Solution {
+  public:
+    void solve(Node* root, int d, map<int, vector<int>> &diagonals) {
+        if (!root) return;
+
+        diagonals[d].push_back(root->data);
+        
+        // Left child -> next diagonal
+        solve(root->left, d + 1, diagonals);
+
+        // Right child -> same diagonal
+        solve(root->right, d, diagonals);
+    }
+
+    vector<int> diagonal(Node *root) {
+        map<int, vector<int>> diagonals;
+        vector<int> ans;
+        
+        solve(root, 0, diagonals);
+
+        for (auto &pair : diagonals) {
+            for (int val : pair.second) {
+                ans.push_back(val);
+            }
+        }
+        return ans;
+    }
+};

@@ -156,7 +156,7 @@ public:
         vector<int> prev;
 
         next = nextSmallerElement(heights, n);
-        prev = prevSmallerElement(heights, n);
+        prev = prevSmallerElement(heights, n); 
         //Now we want to apply our formula
         int max = 0;
         for(int i = 0; i<n; i++){
