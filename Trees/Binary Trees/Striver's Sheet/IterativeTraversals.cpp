@@ -32,6 +32,29 @@ public:
         return ans;
     }
 
+    //left jate jao(while) aur stack me store krate jao jaise hi null aaye print kra do stack ke top ko. aur ek baar right mud jao fir sab repeat kro
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode*> s;
+        TreeNode* curr = root;
+
+        while (curr || !s.empty()) {
+            // Step 1: Reach the leftmost node of the current node
+            while (curr) {
+                s.push(curr);
+                curr = curr->left;
+            }
+            // Step 2: Current is NULL at this point
+            curr = s.top();
+            s.pop();
+
+            ans.push_back(curr->val); // Visit node
+
+            // Step 3: Visit the right subtree
+            curr = curr->right;
+        }
+        return ans;
+    }
     
 
 };
@@ -41,4 +64,4 @@ int main()
     
 
     return 0;
-}
+} 
