@@ -2,7 +2,7 @@
 
 //Inorder of BST is sorted
 
-//Inorder Successor: 
+//Inorder Successor: See in lacture -2
 //Inorder Predecessor: 
 
 // Min value at BST is at atmost left leaft node and Max value at atmost right node.
