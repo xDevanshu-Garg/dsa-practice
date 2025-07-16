@@ -34,23 +34,33 @@ public:
         heapify(arr, size, i);
     }
 
-void heapify(int arr[], int n, int i){
-    int largest = i;
-    int left = i*2;
-    int right = i*2 + 1;
+    void heapify(int arr[], int n, int i){
+        int largest = i;
+        int left = i*2;
+        int right = i*2 + 1;
 
-    //Check whether left child is largest or right. Whichever is largest we've to pick for root.
-    if(left <= n && arr[largest] < arr[left])
-        largest = left; //Largest is updated here
-    //if right is greator then largest i.e. then we've new largest
-    if(right <= n && arr[largest] < arr[right])
-        largest = right;
-        
-    if(largest != i){
-        swap(arr[i], arr[largest]);
-        heapify(arr, n, largest);
+        //Check whether left child is largest or right. Whichever is largest we've to pick for root.
+        if(left <= n && arr[largest] < arr[left])
+            largest = left; //Largest is updated here
+        //if right is greator then largest i.e. then we've new largest
+        if(right <= n && arr[largest] < arr[right])
+            largest = right;
+            
+        if(largest != i){
+            swap(arr[i], arr[largest]);
+            heapify(arr, n, largest);
+        }
     }
-}
+
+    void heapSort(int arr[], int n){
+        while(n > 1){
+            //Step 1: Swap first element with last element and now last element is in right place so decrement the size
+            swap(arr[1], arr[n--]);
+            //Step 2: Call heapify function for the first ele to maintain max heap.
+            heapify(arr, n, 1);
+        }
+    }
+
     void print(){
         for(int i = 1; i <= size; i++){ //Start from 1 till size
             cout << arr[i] << " ";
@@ -81,6 +91,12 @@ int main()
     for(int i = n/2; i > 0; i--) h.heapify(arr, n, i);
     
     cout << "Array after heapify: ";
+    for (int i = 1; i <= n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+
+    cout << "Array After sorting: ";
+    h.heapSort(arr, n);
     for (int i = 1; i <= n; i++)
         cout << arr[i] << " ";
     cout << endl;
