@@ -29,14 +29,12 @@ public:
             ans = numToChar[digit] + ans;
             num = num/16;
         }
-
         return ans;
     }
 };
 
 int main()
 {
-    
     Solution s;
     string ans = s.concatHex36(36) ;
     cout<<ans;
