@@ -1,36 +1,49 @@
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
+    
+void solve(vector<vector<int>> &arr, int n, vector<vector<int>> &visited, vector<string> &ans, string &temp, int i, int j){
+    //Base Case
+    if(i == n-1 && j == n-1){
+        ans.push_back(temp);
+        return;
+    }
 
-int getKthLargest(vector<int> &arr, int k){
-	int n = arr.size();
-	priority_queue<int, vector<int>, greater<int>> minHeap;
-	for(int i = 0; i < n; i++){
-		int sum = 0;
-		for(int j = i+1; j < n; j++){
-			sum += arr[i];
-		}
+    //Valid or not
+    if(visited[i][j] == 1 || (i < 0 || i >= n || j < 0 || j >= n) || arr[i][j] == 0){
+        return;
+    }
 
-		if(minHeap.size() < k) minHeap.push(sum);
-		else{
-			if(minHeap.top() < sum){
-				minHeap.push(sum);
-				minHeap.pop();
-			}
-		}
-	}
+    visited[i][j] = 1;
 
-	for(int i = 0; i < minHeap.size(); i++){
-		cout << minHeap.top() << " ";
-		minHeap.pop();
-	}
-	return minHeap.top();
+    //D
+    temp += "D";
+    solve(arr, n, visited, ans, temp, i+1, j);
+    temp.pop_back();
+
+    //L
+    temp += "L";
+    solve(arr, n, visited, ans, temp, i, j-1);
+    temp.pop_back();
+
+    //R    
+    temp += "R";
+    solve(arr, n, visited, ans, temp, i, j+1);
+    temp.pop_back();
+
+    //U
+    temp += "U";
+    solve(arr, n, visited, ans, temp, i-1, j);
+    temp.pop_back();
+
+    visited[i][j] = 0;
 }
 
-int main()
-{   
-    vector<int> arr = {1, 2, 3, 4, 5};
-    getKthLargest(arr, 2);
+vector < string > searchMaze(vector<vector<int>> &arr, int n) {
 
-    return 0;
+    vector<string> ans;
+    vector<vector<int>> visited(n, vector<int>(n, 0));
+    string temp = "";
+    solve(arr, n, visited, ans, temp, 0, 0);
+    return ans;
 }

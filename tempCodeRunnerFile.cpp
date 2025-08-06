@@ -2,42 +2,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-public:
-    string concatHex36(int n) {
-        // first create mapping
-        unordered_map<int , char> numToChar;
-        for(int i = 0; i < 36; i++){
-             if (i <= 9)
-                numToChar[i] = '0' + i;   // '1' to '9'
-            else
-                numToChar[i] = 'A' + (i - 10);  // 'A' to 'F'
-        }
-        
-        string ans = "";
-        int num = n*n*n;
-
-        while(num != 0){
-            int digit = num % 36;
-            ans = numToChar[digit] + ans;
-            num = num/36;
-        }
-
-        num = n*n;
-        while(num != 0){
-            int digit = num % 16;
-            ans = numToChar[digit] + ans;
-            num = num/16;
-        }
-        return ans;
+void solve(vector<vector<int>> &arr, int n, vector<vector<int>> &visited, vector<string> &ans, string &temp, int i, int j) {
+    // Check bounds and validity
+    if(i < 0 || i >= n || j < 0 || j >= n || visited[i][j] == 1 || arr[i][j] == 0) {
+        return;
     }
-};
 
-int main()
-{
-    Solution s;
-    string ans = s.concatHex36(36) ;
-    cout<<ans;
+    // Base Case
+    if(i == n-1 && j == n-1){
+        ans.push_back(temp);
+        return;
+    }
 
-    return 0;
+    visited[i][j] = 1;
+
+    // D
+    temp += "D";
+    solve(arr, n, visited, ans, temp, i+1, j);
+    temp.pop_back();
+
+    // L
+    temp += "L";
+    solve(arr, n, visited, ans, temp, i, j-1);
+    temp.pop_back();
+
+    // R    
+    temp += "R";
+    solve(arr, n, visited, ans, temp, i, j+1);
+    temp.pop_back();
+
+    // U
+    temp += "U";
+    solve(arr, n, visited, ans, temp, i-1, j);
+    temp.pop_back();
+
+    visited[i][j] = 0; // backtrack
+}
+
+vector<string> searchMaze(vector<vector<int>> &arr, int n) {
+    vector<string> ans;
+    if(arr[0][0] == 0 || arr[n-1][n-1] == 0) return ans;
+
+    vector<vector<int>> visited(n, vector<int>(n, 0));
+    string temp = "";
+    solve(arr, n, visited, ans, temp, 0, 0);
+    return ans;
 }
