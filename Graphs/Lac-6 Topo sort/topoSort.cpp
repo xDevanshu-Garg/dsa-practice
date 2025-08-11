@@ -6,9 +6,8 @@ void topoSort(int node, vector<int> &vis, vector<vector<int>>& adj, stack<int>& 
     vis[node] = true;
     
     for(int nei: adj[node]) {
-        if(!vis[nei]) {
+        if(!vis[nei])
             topoSort(nei, vis, adj, s);
-        }
     }
     s.push(node);
 }
@@ -21,11 +20,11 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
     stack<int> s;
     vector<int> vis(v);
     for(int i = 0; i < v; i++) {
-        if(!vis[i]) {
+        if(!vis[i])
             topoSort(i, vis, adj, s);
-        }
     }
 
+    //Store the ans in a vector and reverse it
     vector<int> ans;
     while(!s.empty()) {
         ans.push_back(s.top());
