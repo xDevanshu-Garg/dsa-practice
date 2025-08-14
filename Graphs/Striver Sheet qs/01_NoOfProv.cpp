@@ -43,4 +43,4 @@ public:
     }
 };
 
-//adj liss can be 0 based example are showing starting node as 1 so I started from 1 but it can start from 0 too 
+//adj list can be 0 based example are showing starting node as 1 so I started from 1 but it can start from 0 too 

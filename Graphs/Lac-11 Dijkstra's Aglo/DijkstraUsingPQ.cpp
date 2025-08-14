@@ -9,18 +9,20 @@ class Solution {
     vector<int> dijkstra(int V, vector<vector<int>> &edges, int src) {
         
         //First make adj list
+        // 0 -> {{node, weight}, {2, 3}, {3,1}}
+        // 1-> -------------------------
         vector<vector<pair<int, int> >> adj(V);
         for(auto& edge: edges) {
             adj[edge[0]].push_back({edge[1], edge[2]});
             adj[edge[1]].push_back({edge[0], edge[2]});
         }
         
-        //Make a dist vector
+        //Make a dist vector to store distFromSource of the node
         vector<int> dist(V, INT_MAX);
         dist[src] = 0;
         //Need a minHeap to store {dist, node}
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, src}); // 0 dist of 0 node
+        pq.push({0, src}); // {distFromSource, node}
         
         while(!pq.empty()) {
             int nodeDist = pq.top().first;

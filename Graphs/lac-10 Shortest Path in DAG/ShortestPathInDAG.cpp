@@ -12,6 +12,7 @@ void topoDFS(int node, vector<vector<pair<int, int>>>& adj, stack<int>& s, vecto
     }
     s.push(node);
 }
+
 vector<int> shortestPathInDAG(int n, int m, vector<vector<int>> &edges)
 {
     //Here we need to create distance vector for 0

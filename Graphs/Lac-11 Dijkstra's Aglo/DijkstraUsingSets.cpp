@@ -51,3 +51,7 @@ vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int sour
 }
 
 //In short: If you have memory concerns then you will use the erase method and if you want to make your code faster you will skip the outdated record 
+
+// Time Complexity: O((V + E) log V) → usually written as O(E log V) for connected graphs.
+
+// Space Complexity: O(V + E).
