@@ -25,9 +25,9 @@ void DFS(int node, int parent, int &timer, vector<int> &disc, vector<int> &low,
                 bridges.push_back({node, nei});
             }
         }
-        else{ // nei is visited means back edge case means nei is also a parent of node
+        else{ // nei is visited means back edge case means nei can also be a parent but it is not otherwise we've skipped it. We've came from diff path. So this is called an back edge.
             //Update low to discovery time of it's nei
-            low[node] = min(low[node], disc[nei]);
+            low[node] = min(low[node], low[nei]);
         }
     }
 
@@ -57,3 +57,6 @@ vector<vector<int>> findBridges(vector<vector<int>> &edges, int v, int e) {
 
     return bridges;
 }
+
+//SC = O(v + 2E) for adj list and +O(3E) for disc, low, vis
+//TC = O(v + 2E) normal undir DFS time
