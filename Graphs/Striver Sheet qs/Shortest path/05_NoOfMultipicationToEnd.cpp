@@ -3,6 +3,8 @@
 using namespace std;
 
 //! https://www.geeksforgeeks.org/problems/minimum-multiplications-to-reach-end/1
+//It's kind of brute forcing we're iterating over the array but we're applying dijkstra too
+// TC (100k * N) where N is the size of array
 
 class Solution {
   public:
