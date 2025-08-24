@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//! https://www.naukri.com/code360/problems/minimum-spanning-tree_631769
+
 // custom comparator
 bool cmp(const vector<int> &a, const vector<int> &b) {
     return a[2] < b[2];
@@ -22,8 +24,7 @@ int findParent(vector<int> &parent, int node) {
         return node;
 
     // assign the new parent for node
-    parent[node] = findParent(parent, parent[node]);
-    return parent[node];
+    return parent[node] = findParent(parent, parent[node]);
 }
 
 void unionSet(int u, int v, vector<int> &parent, vector<int> &rank) {

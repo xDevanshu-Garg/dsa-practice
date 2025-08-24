@@ -21,7 +21,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
     //Step1: Push initial node to PQ: Start from node 1 (assumption)
     //We can take any node as starting node
     // PQ structure: {{weight, Node}, parent} (Weight is first cuz sorting will happen from weight)
-    // Also we can omit parent if we don't need. But in this quest we need to return edge b/w two nodes so we'll require parent-child relation
+    // Also we can omit parent if we don't need. But in this ques we need to return edge b/w two nodes so we'll require parent-child relation
 
     pq.push({{0, 1}, -1}); 
     vector<bool> vis(n+1, false);
