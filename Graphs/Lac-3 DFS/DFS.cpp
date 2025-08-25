@@ -28,3 +28,6 @@ class Solution {
 };
 
 //Commented out part is if we have disconnected graph! (also pass i instead of 0)
+// TC = O(V+E) why? because in DFS you only traverse a node once so total 1 node and while doing it you traverse all edges connected from that node only onces too so in total you traverse all nodes and all edges only onces so TCis sum of V and E
+
+// suppose We have 100 houses and 200 roads we'll traverse all 100 houses only onces and 200 roads only onces in dir graph and in undir maybe twice but it doesn't matter it's still E so total O(V+E)

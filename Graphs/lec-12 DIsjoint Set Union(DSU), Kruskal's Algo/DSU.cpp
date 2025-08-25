@@ -9,8 +9,7 @@ using namespace std;
 
 void makeSet(vector<int> &parent, vector<int> &rank) {
     int n = parent.size();
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         parent[i] = i;
         rank[i] = 0;
     }
