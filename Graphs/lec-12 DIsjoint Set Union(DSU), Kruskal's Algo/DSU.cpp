@@ -41,7 +41,7 @@ void unionSet(int u, int v, vector<int> &parent, vector<int> &rank) {
     }
 }
 
-int DSU(vector<vector<int>> &edges, int n)
+int DSU(int n)
 {
     vector<int> parent(n);
     vector<int> rank(n);
