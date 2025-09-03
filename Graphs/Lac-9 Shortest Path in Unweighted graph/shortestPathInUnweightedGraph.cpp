@@ -4,7 +4,7 @@ using namespace std;
 
 /*
 Logic: We'll use BFS. 
-why? Because BFS explore all nodes level by level so naturally when started from src then it will reach dest the path it took surly is shortest because we're going level by level. I've attached image see that
+why? Because BFS explore all nodes level by level so naturally when started from src then it will reach dest the path it took surely is shortest because we're going level by level. I've attached image see that
 */
 
 //TC is one pass every node means O(N + E)
@@ -83,4 +83,31 @@ int shortestPath(int n, vector<vector<int>> &edges, int src, int dest) {
         }
     }
     return -1; // no path
+}
+
+//3rd way of writing using queue<pair<int, int>> to store node and dist
+int shortestPath(int n, vector<vector<int>> &edges, int src, int dest) {
+
+    vector<vector<int>> adj(n);
+    for (auto &e : edges) {
+        adj[e[0]].push_back(e[1]);
+        adj[e[1]].push_back(e[0]); // undirected
+    }
+
+    vector<bool> vis(n, false);
+    queue<pair<int,int>> q; // {node, distance}
+    vis[src] = true;
+    q.push({src, 0});
+    
+    while(!q.empty()) {
+        auto [u, d] = q.front(); q.pop();
+        if(u == dest) return d;
+        for(int v : adj[u]) {
+            if(!vis[v]) {
+                vis[v] = true;
+                q.push({v, d+1});
+            }
+        }
+    }
+    return -1;
 }

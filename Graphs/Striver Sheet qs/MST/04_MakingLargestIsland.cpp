@@ -5,7 +5,7 @@ using namespace std;
 //! https://leetcode.com/problems/making-a-large-island/
 
 //Idea: Use DSU to map out which node belongs to which component so that it's efficient to find size when we'll flip 0's
-//Map rows and cols using n*r + c formula where n is no. of cols
+//Map rows and cols using n*r + c formula where n is no. of cols05_SwimI
 class DSU {
     public:
     vector<int> parent, size;

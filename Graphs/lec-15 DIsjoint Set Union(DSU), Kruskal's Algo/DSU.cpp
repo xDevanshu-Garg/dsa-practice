@@ -53,3 +53,42 @@ int DSU(int n)
 //Union by size is same as union by rank. 
 // Initialize a size vector with size 1 (cuz every node have atleast 1 node in starting i.e. itself) size counts how many nodes are there in tree like structure.
 // if size of both u and v are same make anyone parent let's say parent[v] = u then increse size of u by size[u] = size[u] + size[v] and then if size[u] < size[v] so again parent[u] = v and size[v] += size[u] simple as hell 
+
+
+class DSU {
+    public:
+    vector<int> parent, rank; 
+
+    DSU(int n) { //constructor
+        parent.resize(n+1);
+        rank.resize(n+1, 0);  // initially, every set has rank 0
+        for(int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if(node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int pu = findParent(u); //parent of u
+        int pv = findParent(v);
+
+        if(pu == pv) return; // already in same set
+
+        // Union by rank
+        if (rank[pu] < rank[pv])
+            parent[pu] = pv;
+        
+        else if (rank[pu] > rank[pv])
+            parent[pv] = pu;
+        
+        else {
+            parent[pv] = pu;
+            rank[pu]++;
+        }
+    }
+};

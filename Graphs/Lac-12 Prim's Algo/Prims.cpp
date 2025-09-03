@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// ! https://www.naukri.com/code360/problems/prim-s-mst_1095633
+
 vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g){
     //Let's make an adj list
     vector<vector<pair<int, int>>> adj(n + 1); // 1-based indexing
@@ -34,6 +36,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
         int node = top.first.second;
         int parent = top.second;
 
+        //! Don't forget this step
         if(vis[node]) continue; //Not considered(We've already visited this node with better weight)
         vis[node] = true; // considered If not visited earlier, now It's visited and we're gonna explore it's meighbours
 
@@ -49,3 +52,44 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
     }
     return mst;
 }
+
+
+//Cleaned Version
+// ! https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1
+class Solution {
+  public:
+    int spanningTree(int V, vector<vector<int>>& edges) {
+        //adj list
+        vector<vector<pair<int, int>>> adj(V); // node -> {NeiNode, weight}
+        for(auto &edge: edges) {
+            adj[edge[0]].push_back({edge[1], edge[2]});
+            adj[edge[1]].push_back({edge[0], edge[2]});
+        }
+        
+        vector<bool> vis(V, false);
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; 
+        int totalWei = 0;
+        
+        pq.push({0, 0}); //Started from 0 {wei, node}
+        
+        while(!pq.empty()) {
+            auto top = pq.top(); pq.pop();
+            int wei = top.first;
+            int node = top.second;
+            
+            if(vis[node]) continue; //Skip visited nodes
+            vis[node] = true;
+            totalWei += wei;
+            
+            for(auto &it: adj[node]) {
+                int edgeWei = it.second;
+                int neiNode = it.first;
+                
+                if(!vis[neiNode]) {
+                    pq.push({edgeWei, neiNode});
+                }
+            }
+        }
+        return totalWei;
+    }
+};

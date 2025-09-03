@@ -39,7 +39,7 @@ vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int sour
                 st.insert({dist[neiNode], neiNode});
 
                 //Now we have to delete our old record because we've lesser value
-                //erasing will cose logn time but saves memory
+                //erasing will cuz logn time but saves memory
                 auto record = st.find({nodeDist, node});
                 if(record != st.end()) {
                     st.erase(record);

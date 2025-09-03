@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//Topo sort can only be done when we have DAG. 
+
 void topoSort(int node, vector<int> &vis, vector<vector<int>>& adj, stack<int>& s) {
     vis[node] = true;
     
