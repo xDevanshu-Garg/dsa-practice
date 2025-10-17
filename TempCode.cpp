@@ -3,19 +3,11 @@
 using namespace std;
 
 
-class Solution {
+  class Solution {
 public:
-    long long maxProduct(vector<int>& nums) {
-        long long maxMul = 0;
-        
-        for(int i = 0; i < nums.size(); i++) {
-            for(int j = i+1; j < nums.size(); j++) {
-                if((nums[i] & nums[j]) == 0) {
-                    long long prod = nums[i] * nums[j];
-                    maxMul = max(maxMul, prod);
-                }
-            }
-        }
-        return maxMul;
+    int countGoodNumbers(long long n) {
+        long long mod = 10e9 + 7;
+        int a = n/2;
+        int b = n-a;
+        return mod % pow(4,a) * mod % pow(5,b);
     }
-};
