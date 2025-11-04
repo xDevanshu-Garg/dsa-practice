@@ -5,12 +5,14 @@ using namespace std;
 
 //!https://www.geeksforgeeks.org/problems/geek-jump/1
 
+//Base Case: if there are 0 stairs means we are at top. So minimum steps to reach at top when stairs are 0 is 0.
+
 //*******************************MEMOIZATION****************************
 class Solution {
   public:
     int solve(int n, vector<int>& height, vector<int> &dp) {
         //BC
-        if(n == 0) return 0;
+        if(n == 0) return 0; 
         
         if(dp[n] != -1) return dp[n];
 
