@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//! LINK: https://leetcode.com/problems/frog-jump
 class Solution {
 public:
     unordered_map<int, int> mp;
