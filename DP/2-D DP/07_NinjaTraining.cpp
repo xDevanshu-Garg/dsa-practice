@@ -98,26 +98,51 @@ Space → O(n * 4) (DP vector) + O(n) (recursion stack)
 
 
 //**************************************Tabulation******************************************/
-
+//Approach tabulation like future me yaha kuch aane wala h, like we calculated for 0th day ki 0 day pr abhi tk ki values ki future me hmne ith task kiya ho (dp[0][i]) ese hi aage 
 int ninjaTraining(int n, vector<vector<int>> &points) {
-    vector<vector<int>> dp(n, vector<int>(4,-1));
+    vector<vector<int>> dp(n, vector<int>(3, 0));
+
+    //Base Case
     dp[0][0] = max(points[0][1], points[0][2]);    
     dp[0][1] = max(points[0][0], points[0][2]);
     dp[0][2] = max(points[0][0], points[0][1]);
-    dp[0][3] = max(points[0][1], max(points[0][1], points[0][2]));
 
     for(int day = 1; day < n; day++) {
-        for(int last = 0; last < 4; last++) {
-            int maxPoints = 0;
+        for(int last = 0; last < 3; last++) {
             for(int task = 0; task < 3; task++) {
                 if(task != last) {
                     int point = points[day][task] + dp[day-1][task];
-                    maxPoints = max(maxPoints, point);
+                    dp[day][last] = max(dp[day][last], point);
                 }
             }
-            dp[day][last] = maxPoints;
         }
     }
-    return dp[n-1][3];
+    
+    return max(dp[n-1][0], max(dp[n-1][1], dp[n-1][2]));
 }
 
+
+// ********************************SPACE OPTIMIZED*******************************************
+//just used two arrays: prev holds values of day-1 tasks and curr hold values of curr day that is being calculated.
+int ninjaTraining(int n, vector<vector<int>> &points) {
+    vector<int> prev(3), curr(3);
+
+    //Base Case
+    prev[0] = max(points[0][1], points[0][2]);    
+    prev[1] = max(points[0][0], points[0][2]);
+    prev[2] = max(points[0][0], points[0][1]);
+
+    for(int day = 1; day < n; day++) {
+        for(int last = 0; last < 3; last++) {
+            for(int task = 0; task < 3; task++) {
+                if(task != last) {
+                    int point = points[day][task] + prev[task];
+                    curr[last] = max(curr[last], point);
+                }
+            }
+        }
+        prev = curr;
+    }
+    
+    return max(curr[0], max(curr[1], curr[2]));
+}
