@@ -1,7 +1,9 @@
 //! Link: https://leetcode.com/problems/minimum-falling-path-sum/
 #include <iostream>
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std;    
+
+//This ques has variable starting point as well as ending point, so start whereever you want but keep in mind if you have n variable points then recrusion will start from n points.
 
 //****************************************MEMOIZATION**********************************
 class Solution {

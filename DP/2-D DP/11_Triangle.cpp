@@ -4,6 +4,7 @@ using namespace std;
 
 //! Link: https://leetcode.com/problems/triangle/
 //LC doesn't accept memoized code
+//This ques has fixed starting point and variable ending point, which means start recursion from fixed starting point.
 
 // *****************************************MEMOIZATION*********************************************
 class Solution {
