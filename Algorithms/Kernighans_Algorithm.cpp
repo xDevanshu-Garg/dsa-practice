@@ -21,6 +21,11 @@ int countSetBits (int num) {
     }
     return count;
 }
+//*************************SECOND VARIATION*******************************
+// while (num > 0) {
+//     num = num & (num - 1);
+//     count++;
+// }
 
 int main() {
     
