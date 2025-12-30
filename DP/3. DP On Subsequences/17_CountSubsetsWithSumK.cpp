@@ -110,3 +110,7 @@ class Solution {
         return prev[target];
     }
 };
+
+//Small Base Case: Handles everything without if else.
+// prev[0] = 1;
+// if(arr[0] <= target) prev[arr[0]] += 1;
