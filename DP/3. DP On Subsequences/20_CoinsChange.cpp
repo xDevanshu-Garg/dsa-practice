@@ -94,3 +94,35 @@ public:
         return (ans >= 1e8) ? -1 : ans;
     }
 };
+
+//***********************************************SPACE OPTIMIZED****************************************
+
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<int> prev(amount+1, 1e8), curr(amount+1, 1e8);
+
+        //Base Case
+        for(int x = 0; x <= amount; x++) {
+            prev[x] = (x % coins[0] == 0) ? x/coins[0] : 1e8; 
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int x = 0; x <= amount; x++) {
+                int pick = 1e8;
+                if(x - coins[i] >= 0)
+                    pick = 1 + curr[x - coins[i]];
+
+                // notPick: move to the previous coin
+                int notPick = prev[x];
+                
+                curr[x] = min(pick, notPick);
+            }
+            prev = curr;
+        }
+
+        int ans = prev[amount];
+        return (ans >= 1e8) ? -1 : ans;
+    }
+};
