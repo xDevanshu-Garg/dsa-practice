@@ -72,9 +72,7 @@ class Solution {
         int n = val.size();
         
         vector<int> prev(W+1, 0), curr(W+1, 0);
-        
-        //You can start taking item 0 after weight == wt[0]
-        //So fill all the cells of row 1 after the threshold value
+
         for(int Wt = wt[0]; Wt <= W; Wt++) {
             prev[Wt] = (Wt / wt[0]) * val[0];
         }
@@ -94,5 +92,37 @@ class Solution {
             prev = curr;
         }
         return prev[W];
+    }
+};
+
+// *****************************************SPACE OPTIMIZED with 1 array******************************************
+//We observed and realised that in take part we're using curr array so no problem here, in notTake we're using prev array but we're using exact col(Wt) so we don't need prev at all
+
+class Solution {
+  public:
+    int knapSack(vector<int>& val, vector<int>& wt, int W) {
+        int n = val.size();
+        
+        vector<int> dp(W+1, 0);
+    
+        for(int Wt = wt[0]; Wt <= W; Wt++) {
+            dp[Wt] = (Wt / wt[0]) * val[0];
+        }
+            
+        for(int i = 1; i < n; i++) {
+            for(int Wt = 0; Wt <= W; Wt++) {
+                int pick = 0, notPick = 0;
+                
+                //Pick
+                if(Wt - wt[i] >= 0)
+                    pick = val[i] + dp[Wt-wt[i]];
+                    
+                //nonPick
+                notPick = dp[Wt];
+                
+                dp[Wt] = max(pick, notPick);
+            }
+        }
+        return dp[W];
     }
 };
