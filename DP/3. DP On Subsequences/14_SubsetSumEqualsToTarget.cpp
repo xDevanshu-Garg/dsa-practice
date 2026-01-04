@@ -4,6 +4,9 @@ using namespace std;
 
 //! https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
 
+//Subsequence: A sub string with same order of elements that may or may not be contiguious. 
+//"abc": "" "a" "b" "c" "ab" "bc" "ac" "abc (2^n)
+
 //Recursion 
 // TC: O(2^n)
 // SC: O(n)
