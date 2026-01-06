@@ -14,7 +14,10 @@ using namespace std;
 // Output: "bxyz"
 // But greedy will give output bc or c or xyz yz z so max is xyz of 3 length not bxyz of len 4, why? because sometimes you must skip a matching character to allow a longer match in future and future can only be seen by DP.
 
-//TC: O(2^n * 2^m)
+//TC of Brute force: O(2^n * 2^m)
+
+//*****************************************MEMOIZATION************************************
+
 class Solution {
 public:
     int solve(int i, int j, string& s1, string& s2, vector<vector<int>>& dp) {
@@ -65,5 +68,29 @@ public:
         }
 
         return dp[n][m];
+    }
+};
+
+
+//*****************************************SPACE OPTIMIZATION************************************
+
+class Solution {
+public:
+    int longestCommonSubsequence(string s1, string s2) {
+        int n = s1.length(), m = s2.length();
+        vector<int> prev(m+1, 0), curr(m+1, 0);
+
+        for(int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                // Match
+                if (s1[i-1] == s2[j-1])
+                    curr[j] = 1 + prev[j-1];
+                // No match
+                else curr[j] = max(prev[j], curr[j-1]);
+            }
+            prev = curr;
+        }
+
+        return prev[m];
     }
 };
