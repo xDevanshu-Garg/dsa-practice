@@ -5,6 +5,7 @@ using namespace std;
 // Substring: A string from oringal strings that follows relative order and is contiguous. Total: n *(n+1)/2
 
 //! https://www.geeksforgeeks.org/problems/longest-common-substring1452/1
+//! https://leetcode.com/problems/maximum-length-of-repeated-subarray/
 
 //DP state must contain exactly the information needed to make the next decision without ambiguity.
 
@@ -53,6 +54,7 @@ class Solution {
                     curr[j] = 0;   // reset (continuity breaks)
                 }
             }
+            prev = curr;
         }
         return ans;
     }
