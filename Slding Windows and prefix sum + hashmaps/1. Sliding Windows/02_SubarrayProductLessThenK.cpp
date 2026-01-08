@@ -3,7 +3,7 @@
 using namespace std;
 
 //! https://leetcode.com/problems/subarray-product-less-than-k/description/
-//count, less then(At most)
+//count, less then(At most type)
 
 class Solution {
 public:

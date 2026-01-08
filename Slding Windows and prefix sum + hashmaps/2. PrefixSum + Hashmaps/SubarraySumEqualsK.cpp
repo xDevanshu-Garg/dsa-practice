@@ -44,3 +44,25 @@ class Solution {
         return count;
     }
 };
+
+//Single pass
+int countSubarraysWithKOdds(vector<int>& arr, int k) {
+    unordered_map<int, int> mp;
+    mp[0] = 1;  // base case
+
+    int prefixSum = 0;
+    int count = 0;
+
+    for (int x : arr) {
+        // Convert odd to 1, even to 0
+        prefixSum += (x % 2);
+
+        if (mp.count(prefixSum - k)) {
+            count += mp[prefixSum - k];
+        }
+
+        mp[prefixSum]++;
+    }
+
+    return count;
+}
