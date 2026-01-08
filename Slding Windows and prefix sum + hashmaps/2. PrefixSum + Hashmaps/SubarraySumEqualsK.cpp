@@ -66,3 +66,30 @@ int countSubarraysWithKOdds(vector<int>& arr, int k) {
 
     return count;
 }
+
+// Approach 2: At Most K Odds (Sliding Window)
+// exactly(k) = atMost(k) - atMost(k - 1)
+
+//Helper Function
+int atMostK(vector<int>& arr, int k) {
+    int left = 0, oddCount = 0, res = 0;
+
+    for (int right = 0; right < arr.size(); right++) {
+        if (arr[right] % 2 == 1)
+            oddCount++;
+
+        while (oddCount > k) {
+            if (arr[left] % 2 == 1)
+                oddCount--;
+            left++;
+        }
+
+        res += right - left + 1;
+    }
+    return res;
+}
+
+//Main Function
+int numberOfSubarrays(vector<int>& arr, int k) {
+    return atMostK(arr, k) - atMostK(arr, k - 1);
+}

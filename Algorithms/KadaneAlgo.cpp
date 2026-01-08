@@ -30,8 +30,8 @@ int maxSubArraySum(vector<int> &arr) {
 
 //Simple way
 int maxSubArraySum2(vector<int> &arr) {
-    int currSum = arr[0];
-    int maxSum = arr[0];
+    int currSum = 0;
+    int maxSum = INT_MIN;
 
     for (int x: arr) {
         // Either extend the previous subarray or start a new one but include x not 0
