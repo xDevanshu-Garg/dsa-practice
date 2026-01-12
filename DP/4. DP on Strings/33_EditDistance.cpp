@@ -62,13 +62,14 @@ public:
         if (s1[i - 1] == s2[j - 1]) {
             return dp[i][j] = solve(i - 1, j - 1, s1, s2, dp);
         }
-
-        // Insert, Delete, Replace
-        int insertOp  = solve(i, j - 1, s1, s2, dp);
-        int deleteOp  = solve(i - 1, j, s1, s2, dp);
-        int replaceOp = solve(i - 1, j - 1, s1, s2, dp);
-
-        return dp[i][j] = 1 + min({insertOp, deleteOp, replaceOp});
+        else {
+            // Insert, Delete, Replace
+            int insertOp  = solve(i, j - 1, s1, s2, dp);
+            int deleteOp  = solve(i - 1, j, s1, s2, dp);
+            int replaceOp = solve(i - 1, j - 1, s1, s2, dp);
+    
+            return dp[i][j] = 1 + min({insertOp, deleteOp, replaceOp});
+        }
     }
 
     int minDistance(string word1, string word2) {
@@ -81,9 +82,92 @@ public:
 
 // *************************************TABULATION***********************************
 
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int n = word1.size(), m = word2.size();
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+
+        // Base cases
+        for(int j = 0; j <= m; j++) dp[0][j] = j;
+        for(int i = 0; i <= n; i++) dp[i][0] = i;
+
+        for(int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                 // If characters match
+                if (word1[i-1] == word2[j-1]) {
+                    dp[i][j] = dp[i-1][j-1];
+                }
+                else {
+                    // Insert, Delete, Replace
+                    int insertOp  = dp[i][j-1];
+                    int deleteOp  = dp[i-1][j];
+                    int replaceOp = dp[i-1][j-1];
+
+                    dp[i][j] = 1 + min({insertOp, deleteOp, replaceOp});   
+                }
+            }
+        }
+        return dp[n][m];
+    }
+};
 
 
 // *************************************SPACE OPTIMIZED***********************************
 
+//@ Base Case for i when j is 0 is inside first for loop
+
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int n = word1.size(), m = word2.size();
+        vector<int> prev(m+1, 0), curr(m+1, 0);
+
+        // Base cases
+        for(int j = 0; j <= m; j++) prev[j] = j;
+
+        for(int i = 1; i <= n; i++) {
+            curr[0] = i; //Base Case
+            for (int j = 1; j <= m; j++) {
+                 // If characters match
+                if (word1[i-1] == word2[j-1]) {
+                    curr[j] = prev[j-1];
+                }
+                else {
+                    // Insert, Delete, Replace
+                    int insertOp  = curr[j-1];
+                    int deleteOp  = prev[j];
+                    int replaceOp = prev[j-1];
+
+                    curr[j] = 1 + min({insertOp, deleteOp, replaceOp});   
+                }
+            }
+            prev = curr;
+        }
+        return prev[m];
+    }
+};
+
 
 // **********************************EVEN MORE SPACE OPTIMIZED****************************
+/*
+At iteration (i, j):
+- dp[j] → prev[j] (value from previous row, same column)
+- dp[j-1] → curr[j-1] (value from current row, left column)
+- upDia → prev[j-1] (value from previous row, diagonal)
+
+? Match Case
+int curr = dp[j];   // save prev[j]
+dp[j] = upDia;     // dp[i][j] = prev[i-1][j-1]
+upDia = curr;      // move diagonal for next j
+We before overwriting, which is crucial.
+
+? Not match case
+int insertOp  = dp[j-1]; // curr[j-1]
+int deleteOp  = dp[j];   // prev[j]
+int replaceOp = upDia;   // prev[j-1]
+
+upDia = dp[j];           // save prev[j] for next column
+dp[j] = 1 + min(...);
+We update upDia after using it, which preserves correctness.
+*/
