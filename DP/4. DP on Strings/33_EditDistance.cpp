@@ -4,15 +4,6 @@ using namespace std;
 
 //! https://leetcode.com/problems/edit-distance/description/
 
-#include <iostream>
-#include <bits/stdc++.h>
-using namespace std;
-
-//There are two types of dp on strings problem when there are two strings
-//One is LCS second is counting, lcs is used when we want max, min
-
-//! https://leetcode.com/problems/distinct-subsequences/
-
 // ****************************************MEMOIZATION***********************************
 // if char match no operations needed to perform, else check all 3 condns, if we insert only j moves, if we del only i moves and in rep operation both moves. (also add 1 cuz 1 operation is done)
 //Base Case: if i is empty then we need to insert j+1 chars, if j is empty then delete i+1 chars
@@ -171,3 +162,37 @@ upDia = dp[j];           // save prev[j] for next column
 dp[j] = 1 + min(...);
 We update upDia after using it, which preserves correctness.
 */
+
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int n = word1.size(), m = word2.size();
+        vector<int> dp(m+1, 0);
+
+        // Base case
+        for(int j = 0; j <= m; j++) dp[j] = j;
+
+        for(int i = 1; i <= n; i++) {
+            int upDia = dp[0]; // Store Diagonal
+            dp[0] = i; //Base Case
+            for (int j = 1; j <= m; j++) {
+                 // If characters match
+                if (word1[i-1] == word2[j-1]) {
+                    int curr = dp[j];
+                    dp[j] = upDia;
+                    upDia = curr;
+                }
+                else {
+                    // Insert, Delete, Replace
+                    int insertOp  = dp[j-1];
+                    int deleteOp  = dp[j];
+                    int replaceOp = upDia;
+
+                    upDia = dp[j];
+                    dp[j] = 1 + min({insertOp, deleteOp, replaceOp});   
+                }
+            }
+        }
+        return dp[m];
+    }
+};
