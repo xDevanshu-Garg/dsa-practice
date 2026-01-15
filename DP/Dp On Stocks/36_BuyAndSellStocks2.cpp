@@ -52,6 +52,7 @@ class Solution {
             if(canBuy) return 0;
             else return prices[n-1];
         } 
+        // or if (i == n || j == 4) return 0; (but upper onces helped us to write tabulation)
         
         if(dp[i][canBuy] != -1) return dp[i][canBuy];
         
