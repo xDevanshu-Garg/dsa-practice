@@ -50,7 +50,97 @@ public:
 
 // ***************************************TABULATION************************************************
 
+// Same just inside loop is not equals to j, because j == 4 is always 0
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<int>> dp(n, vector<int>(5, 0));
 
+        // Base Case
+        for(int j = 0; j < 4; j++) {
+            if(j == 0 || j == 2) dp[n-1][j] = 0;
+            else dp[n-1][j] = prices[n-1];
+        }
+        dp[n-1][4] = 0;
+
+        for(int i = n-2; i >= 0; i--) {
+            for(int j = 0; j < 4; j++) {
+                // Buy
+                if(j == 0 || j == 2) {
+                    dp[i][j] = max(-prices[i] + dp[i+1][j+1], dp[i+1][j]);
+                }
+                // Sell
+                else {
+                    dp[i][j] = max(prices[i] + dp[i+1][j+1], dp[i+1][j]);
+                }
+            }
+        }
+        
+        return dp[0][0];
+    }
+};
 
 
 // ***************************************SPACE OPTIMIZED*********************************************
+
+class Solution {
+    public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<int> next(5, 0), curr(5, 0);
+        
+        // Base Case
+        for(int j = 0; j < 4; j++) {
+            if(j == 0 || j == 2) next[j] = 0;
+            else next[j] = prices[n-1];
+        }
+
+        for(int i = n-2; i >= 0; i--) {
+            for(int j = 0; j < 4; j++) {
+                // Buy
+                if(j == 0 || j == 2) {
+                    curr[j] = max(-prices[i] + next[j+1], next[j]);
+                }
+                // Sell
+                else {
+                    curr[j] = max(prices[i] + next[j+1], next[j]);
+                }
+            }
+            next = curr;
+        }
+        
+        return next[0];
+    }
+};
+
+// ***************************************SPACE OPTIMIZED 1 array*********************************************
+
+class Solution {
+    public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<int> dp(5, 0);
+
+        // Base Case
+        for(int j = 0; j < 4; j++) {
+            if(j == 0 || j == 2) dp[j] = 0;
+            else dp[j] = prices[n-1];
+        }
+
+        for(int i = n-2; i >= 0; i--) {
+            for(int j = 0; j < 4; j++) {
+                // Buy
+                if(j == 0 || j == 2) {
+                    dp[j] = max(-prices[i] + dp[j+1], dp[j]);
+                }
+                // Sell
+                else {
+                    dp[j] = max(prices[i] + dp[j+1], dp[j]);
+                }
+            }
+        }
+        
+        return dp[0];
+    }
+};
