@@ -52,7 +52,7 @@ class Solution {
             if(canBuy) return 0;
             else return prices[n-1];
         } 
-        // or if (i == n || j == 4) return 0; (but upper onces helped us to write tabulation)
+        // or if (i == n) return 0; (but upper onces helped us to write tabulation)
         
         if(dp[i][canBuy] != -1) return dp[i][canBuy];
         
@@ -79,7 +79,7 @@ class Solution {
     }
     
     int maxProfit(vector<int>& prices) {
-        // 1: Can buy, 2: Can sell
+        // 1: Can buy, 0: Can sell
         vector<vector<int>> dp(prices.size(), vector<int>(2, -1));
         return solve(0, 1, prices, dp);
     }
