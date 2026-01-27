@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Intuition bada h to seedhe push krdo, chota h to uski shi posn dundh kr use replace krdo, kyuki agr chota hoga to LIS ko aage extend krne ke chance zayada honge(Greedy) for better explanation read this code and go to dp 44 comments.
+
 // lower_bound(x)	first >= x
 // upper_bound(x)	first > x
 

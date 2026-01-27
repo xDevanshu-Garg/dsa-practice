@@ -1,0 +1,2 @@
+4 patterns in LIS
+if LIS nikalna h to 3 tareeke h dp wala (normal), priting ke ander bina prev ke, BS Wala
