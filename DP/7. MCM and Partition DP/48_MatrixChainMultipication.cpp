@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Pattern: When their and multiple ways to solve a problem and you want the best onw 
+// Pattern: When there are and multiple ways to solve a problem and you want the best one
 // Like (1 + 2 + 3) * (4) gives diff ans and (1 + 2) + (3 * 4) gives diff ans depending upon where you place brackets.
 
 //! https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
