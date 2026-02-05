@@ -4,6 +4,7 @@ using namespace std;
 
 //! https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
 
+// j will always we i+1, base case are implicit, when i == j they are already 0
 class Solution {
   public:
     int matrixMultiplication(vector<int> &arr) {

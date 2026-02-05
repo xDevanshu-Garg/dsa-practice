@@ -41,3 +41,34 @@ public:
 // i > j is base case because when we cut a stick we're calling for i to k-1, so if we have i = 2, j = 5, k = 2, then new call for left is f(2, 1) so we hit base case, or if k = 5, we'll call f(6,5) for right side again base case.
 // cost is calc as costs[j+1] - costs[i-1] + left + right
                                                                                                 
+
+//***************************************TABULATION**************************************
+
+class Solution {
+public:
+    int minCost(int n, vector<int>& cuts) {
+        sort(cuts.begin(), cuts.end());
+        cuts.insert(cuts.begin(), 0);
+        cuts.push_back(n);
+
+        int m = cuts.size();
+        vector<vector<int>> dp(m, vector<int>(m, 0));
+
+        for(int i = m-2; i >= 1; i--) {
+            for(int j = i; j <= m-2; j++) {
+                int mini = INT_MAX;
+
+                for (int k = i; k <= j; k++) {
+                    int cost = (cuts[j + 1] - cuts[i - 1])
+                            + dp[i][k-1]
+                            + dp[k+1][j];
+                    mini = min(mini, cost);
+                }
+
+                dp[i][j] = mini;
+            }
+        }
+        return dp[1][m-2];
+    }
+};
+// Time: O(m^3), Space: O(m^2)

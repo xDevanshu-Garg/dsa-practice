@@ -5,6 +5,12 @@ using namespace std;
 // Pattern: When there are and multiple ways to solve a problem and you want the best one
 // Like (1 + 2 + 3) * (4) gives diff ans and (1 + 2) + (3 * 4) gives diff ans depending upon where you place brackets.
 
+/*
+1. Start with entire block/array (in this case 1 to n-1)
+2. Try all partition (Run a loop to try all partition)
+3. return the best possible partition (2 calls because of partition)
+*/
+
 //! https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
 
 class Solution {
@@ -29,3 +35,5 @@ class Solution {
         return solve(1, n-1, arr, dp);
     }
 };
+
+// TC: O(n^3), SC: O(n^2 + stack space(n))
