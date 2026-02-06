@@ -13,13 +13,16 @@ public:
         int left = 0;
 
         for(int right = 0; right < nums.size(); right++) {
+            // build phase
             if(nums[right] == 0) {
                 k--;
             }
+            // shrink phase
             while(k < 0) {
                 if(nums[left] == 0) k++;
                 left++;
             }
+            // store max ans phase (it's here because now window is valid, so the posn of this part is correct)
             maxi = max(maxi, right - left + 1);
         }
         return maxi;

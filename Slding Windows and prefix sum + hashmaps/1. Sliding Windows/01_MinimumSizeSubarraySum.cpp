@@ -7,8 +7,8 @@ using namespace std;
 // if we have only positive numbers and we have to find sum k in a subarray where array can be upto 10^9 (Basically solve in O(n)) then we use sliding windows
 // Why it works? Because all numbers are positive, increasing the window size only increases the sum, and shrinking it only decreases the sum. This monotonic behavior is the key.
 //Trick: 
-//   Min: Increase the size of window untill it's valid then decrease the size of winodow untill it's invalid
-//   Max: Increase the size of window untill it's invalid then decrease the size of winodow untill it's valid again.
+//   Min: Increase the size of window until it's valid then decrease the size of window until it's invalid
+//   Max: Increase the size of window until it's invalid then decrease the size of window until it's valid again.
 
 //Stopping condn when right reaches end in max/min. And for exactly type of condn stop when we found exactly k size subarray. 
 /*
@@ -44,4 +44,4 @@ public:
 };
 
 
-//[4, -2, 1] → sum = 3, sliding window will fail here, because of -ves, in this we've to find a subarray with sum exaclty k.
+//[4, -2, 1] → sum = 3, sliding window will fail here, because of -ves, in this we've to find a subarray with sum exactly k.
