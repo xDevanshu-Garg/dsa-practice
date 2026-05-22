@@ -4,6 +4,7 @@ class heap{
 public:
     int arr[100];
     int size = 0;
+    // indexing is 1 based
 
     void insert(int val){
         size++;
@@ -87,6 +88,7 @@ int main()
     int arr[6] = {-1, 54, 53, 55, 52, 50};
     int n = 5;
     //O(n) not O(nlogn)
+    // in CBT(complete BT) leaf nodes start from n/2 + 1 to n
     //We'll start from n/2 because after n/2 (n/2 + 1 to n) there are only leaf nodes so they're already max heaps so no need to change.
     for(int i = n/2; i > 0; i--) h.heapify(arr, n, i);
     
