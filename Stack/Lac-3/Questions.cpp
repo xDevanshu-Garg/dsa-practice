@@ -171,4 +171,39 @@ public:
     }
 };
 
-//REvised.
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& nums) {
+        int n = nums.size();
+
+        stack<int> st;
+        int ans = 0;
+        for(int i = 0; i < n; i++) {
+            while(!st.empty() && nums[i] <= nums[st.top()]) {
+                int val = nums[st.top()];
+                st.pop();
+
+                int nse = i;
+                int pse = -1;
+                if(!st.empty()) pse = st.top();
+
+                ans = max(ans, (nse - pse - 1) * val);
+            }
+
+            st.push(i);
+        }
+
+        while(!st.empty()) {
+            int val = nums[st.top()];
+            st.pop();
+
+            int nse = n;
+            int pse = -1;
+            if(!st.empty()) pse = st.top();
+
+            ans = max(ans, (nse - pse -1) * val);
+        }
+        
+        return ans;
+    }
+};
